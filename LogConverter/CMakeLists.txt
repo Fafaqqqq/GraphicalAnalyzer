@@ -4,4 +4,4 @@ project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp LogParser.cpp LogParser.h ScriptParser.cpp ScriptParser.h)
