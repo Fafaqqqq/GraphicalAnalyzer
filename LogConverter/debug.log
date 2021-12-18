@@ -1,0 +1,26 @@
+00316.943382 | pextgt | write ++
+00316.943385 | sys | thread switch hndl 0x82B4BDC8 addr 0x8E1CD494 pri 7
+00316.943388 | sys | thread switch hndl 0x82B4BDC8 addr 0x8E1CD494 pri 10
+00316.943406 | sys | thread switch hndl 0x82B4BDC8 addr 0x8E1CD494 pri 7
+00316.943410 | upr_sctl | in az_v_p 0.116499
+00316.943413 | upr_sctl | in hand_d 255
+00316.943416 | upr_sctl | in pult_in_gn 0.000394 vn 0.000359
+00316.943418 | sys | thread switch hndl 0x82B4BDC8 addr 0x8E1CD494 pri 10
+00316.943427 | sys | thread switch hndl 0x82B4BDC8 addr 0x8E1CD494 pri 7
+00316.943429 | sctl | pult 0.000394 0.000359
+00316.943436 | sys | thread switch hndl 0x82B4BDC8 addr 0x8E1CD494 pri 10
+00316.943445 | sys | thread switch hndl 0x82B4BDC8 addr 0x8E1CD494 pri 7
+00316.943459 | sctl | err_s 0.000000 0.000000
+00316.943460 | sctl | err_w -0.000000 0.000000 1.000000
+00316.943462 | sctl | time_real 317.073656 pr_is 0
+00316.943464 | sctl | time_zamer_ld 0.000000 d_cel_ld 0 hand_d 255
+00316.943481 | sys | thread switch hndl 0x82B4BDC8 addr 0x8E1CD494 pri 10
+00316.943492 | sys | thread switch hndl 0x82B4BDC8 addr 0x8E1CD494 pri 7
+00316.943521 | sctl | trgtPos 0.000000 0.000000 0.000000
+00316.943522 | sctl | time_1 0.000000
+00316.943523 | sctl | time_2 0.000000
+00316.943525 | sctl | time_opt 0.000000
+00316.943528 | sys | thread switch hndl 0x82B4BDC8 addr 0x8E1CD494 pri 10
+00316.943537 | sys | thread switch hndl 0x82B4BDC8 addr 0x8E1CD494 pri 7
+00316.943596 | pextgt | write --
+00316.943598 | sys | thread switch hndl 0x82B4BDC8 addr 0x8E1CD494 pri 14
