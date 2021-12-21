@@ -7,4 +7,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(${PROJECT_NAME} main.cpp LogConverter.cpp LogConverter.h
                                         ScriptParser.cpp ScriptParser.h
-        )
+        Frame.cpp Frame.h)

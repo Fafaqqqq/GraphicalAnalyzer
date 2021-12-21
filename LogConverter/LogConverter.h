@@ -11,7 +11,7 @@
 class LogConverter
 {
 public:
-
+    std::vector<std::string> Convert(std::vector<std::string>&& arrayToConvert);
 };
 
 

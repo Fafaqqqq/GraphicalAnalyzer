@@ -7,9 +7,9 @@
 #include <sstream>
 #include <iostream>
 
-std::vector<ScriptParser::Frame> ScriptParser::Parse(std::ifstream &script_stream)
+std::vector<Frame> ScriptParser::Parse(std::istream &script_stream)
 {
-    std::vector<ScriptParser::Frame> parsed_lines;
+    std::vector<Frame> parsed_lines;
 
     while (!script_stream.eof())
     {
@@ -28,8 +28,6 @@ std::vector<ScriptParser::Frame> ScriptParser::Parse(std::ifstream &script_strea
         auto args = std::move(ParseArgs(log_parser_format));
         auto requires = std::move(ParseRequire(log_parser_format));
         parsed_lines.emplace_back(signal_name, std::move(requires), std::move(args));
-
-
     }
 
     return std::move(parsed_lines);
@@ -70,13 +68,7 @@ std::vector<std::string> ScriptParser::ParseRequire(const std::string &format) {
     {
         if (format[i] == '\"')
         {
-            if (begin == -1)
-            {
-                begin = i;
-            }
-            else {
-                end = i;
-            }
+            (begin == -1) ? (begin = i) : (end = i);
         }
 
         if (begin != -1 && end != -1)
@@ -92,48 +84,4 @@ std::vector<std::string> ScriptParser::ParseRequire(const std::string &format) {
     return std::move(requires);
 }
 
-ScriptParser::Frame::Frame(const std::string &name)
-        : nameSignal(name) {}
-
-ScriptParser::Frame::Frame(const std::string& name, std::vector<std::string> &&requires, std::vector<std::string> &&inputArgs)
-    : nameSignal(name), requireStrings(std::move(requires)), inputArgList(std::move(inputArgs)){}
-
-void ScriptParser::Frame::AddRequire(const std::string &require) {
-    requireStrings.emplace_back(require);
-}
-
-void ScriptParser::Frame::AddArg(const std::string &arg) {
-    inputArgList.emplace_back(arg);
-}
-
-std::string ScriptParser::Frame::GetRequire(int index) {
-
-    if (index >= 0 && index < requireStrings.size())
-    {
-        return requireStrings[index];
-    }
-
-    throw std::range_error("Out the range!");
-}
-
-std::string ScriptParser::Frame::GetArg(int index) {
-    if (index >= 0 && index < inputArgList.size())
-    {
-        return inputArgList[index];
-    }
-
-    throw std::range_error("Out the range!");
-}
-
-int ScriptParser::Frame::GetCountRequires() {
-    requireStrings.size();
-}
-
-int ScriptParser::Frame::GetCountArgs() {
-    return inputArgList.size();
-}
-
-std::string ScriptParser::Frame::Name() {
-    return nameSignal;
-}
 
