@@ -25,7 +25,7 @@ std::vector<ScriptParser::Frame> ScriptParser::Parse(std::ifstream &script_strea
         std::copy(++it, line_for_parse.end(), std::back_inserter(log_parser_format));
 
 
-        std::vector<std::string> args = std::move(ParseArgs(log_parser_format));
+        auto args = std::move(ParseArgs(log_parser_format));
         auto requires = std::move(ParseRequire(log_parser_format));
         parsed_lines.emplace_back(signal_name, std::move(requires), std::move(args));
 

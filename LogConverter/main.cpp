@@ -8,7 +8,7 @@ int main(int argc, char** argv)
     std::ifstream scr_stream(argv[2]);
     std::ofstream ga_stream(argv[3], std::ios::binary);
 
-    auto v = ScriptParser().Parse(scr_stream);
+    auto v = std::move(ScriptParser().Parse(scr_stream));
 
     return 0;
 }
