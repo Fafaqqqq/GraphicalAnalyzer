@@ -78,8 +78,8 @@ build CMakeFiles/LogConverter.dir/main.cpp.o: CXX_COMPILER__LogConverter_Debug /
   OBJECT_DIR = CMakeFiles/LogConverter.dir
   OBJECT_FILE_DIR = CMakeFiles/LogConverter.dir
 
-build CMakeFiles/LogConverter.dir/LogParser.cpp.o: CXX_COMPILER__LogConverter_Debug /home/fafaq/MyProjects/GraphicalAnalyzer/LogConverter/LogParser.cpp || cmake_object_order_depends_target_LogConverter
-  DEP_FILE = CMakeFiles/LogConverter.dir/LogParser.cpp.o.d
+build CMakeFiles/LogConverter.dir/LogConverter.cpp.o: CXX_COMPILER__LogConverter_Debug /home/fafaq/MyProjects/GraphicalAnalyzer/LogConverter/LogConverter.cpp || cmake_object_order_depends_target_LogConverter
+  DEP_FILE = CMakeFiles/LogConverter.dir/LogConverter.cpp.o.d
   FLAGS = -g -std=gnu++14
   OBJECT_DIR = CMakeFiles/LogConverter.dir
   OBJECT_FILE_DIR = CMakeFiles/LogConverter.dir
@@ -98,7 +98,7 @@ build CMakeFiles/LogConverter.dir/ScriptParser.cpp.o: CXX_COMPILER__LogConverter
 #############################################
 # Link the executable LogConverter
 
-build LogConverter: CXX_EXECUTABLE_LINKER__LogConverter_Debug CMakeFiles/LogConverter.dir/main.cpp.o CMakeFiles/LogConverter.dir/LogParser.cpp.o CMakeFiles/LogConverter.dir/ScriptParser.cpp.o
+build LogConverter: CXX_EXECUTABLE_LINKER__LogConverter_Debug CMakeFiles/LogConverter.dir/main.cpp.o CMakeFiles/LogConverter.dir/LogConverter.cpp.o CMakeFiles/LogConverter.dir/ScriptParser.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/LogConverter.dir
   POST_BUILD = :
