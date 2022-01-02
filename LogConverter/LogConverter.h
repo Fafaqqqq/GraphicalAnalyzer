@@ -1,7 +1,3 @@
-//
-// Created by fafaq on 18.12.2021.
-//
-
 #ifndef LOGCONVERTER_LOGCONVERTER_H
 #define LOGCONVERTER_LOGCONVERTER_H
 #include <fstream>
@@ -11,7 +7,10 @@
 class LogConverter
 {
 public:
-    std::vector<std::string> Convert(std::vector<std::string>&& arrayToConvert);
+    void Convert(const std::string& fromFile, const std::string& toFile, const std::string& filterFile);
+
+    std::vector<std::string> ReadFile(std::ifstream& file);
+    std::vector<std::pair<std::string, std::vector<std::string>>> ParseLog(const std::vector<std::string>& inputVec, const std::vector<Frame>& filters);
 };
 
 
