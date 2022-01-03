@@ -1,13 +1,14 @@
 #include <iostream>
 #include <fstream>
-#include "LogConverter.h"
+#include "include/LogConverter.h"
 
 int main(int argc, char** argv)
 {
-//    std::ifstream log_stream(argv[1]);
-//    std::ifstream scr_stream(argv[2]);
-//    std::ofstream ga_stream(argv[3], std::ios::binary);
+    if (argc == 1 || argc == 2 && (std::string(argv[1]) == "--help" || std::string(argv[1]) == "-h"))
+    {
+        std::cout << "help topic\n";
+    }
 
-    LogConverter().Convert(argv[1], argv[3], argv[2]);
+    //LogConverter().Convert(argv[1], argv[3], argv[2]);
     return 0;
 }

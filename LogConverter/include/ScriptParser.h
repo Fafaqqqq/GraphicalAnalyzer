@@ -1,15 +1,11 @@
-//
-// Created by fafaq on 18.12.2021.
-//
-
 #ifndef LOGCONVERTER_SCRIPTPARSER_H
 #define LOGCONVERTER_SCRIPTPARSER_H
-#include "Frame.h"
+#include "FiltersConteiner.h"
 
 class ScriptParser
 {
 public:
-    std::vector<Frame> Parse(std::istream& script_stream);
+    std::vector<FiltersConteiner> Parse(std::istream& script_stream);
 
 private:
     std::vector<std::string> ParseArgs(const std::string& format);

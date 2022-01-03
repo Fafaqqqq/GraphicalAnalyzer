@@ -1,14 +1,10 @@
-//
-// Created by fafaq on 18.12.2021.
-//
-
-#include "ScriptParser.h"
+#include "../include/ScriptParser.h"
 #include <sstream>
 #include <iostream>
 
-std::vector<Frame> ScriptParser::Parse(std::istream &script_stream)
+std::vector<FiltersConteiner> ScriptParser::Parse(std::istream &script_stream)
 {
-    std::vector<Frame> parsed_lines;
+    std::vector<FiltersConteiner> parsed_lines;
 
     while (!script_stream.eof())
     {
@@ -32,7 +28,8 @@ std::vector<Frame> ScriptParser::Parse(std::istream &script_stream)
     return std::move(parsed_lines);
 }
 
-std::vector<std::string> ScriptParser::ParseArgs(const std::string &format) {
+std::vector<std::string> ScriptParser::ParseArgs(const std::string &format)
+{
 
     std::vector<std::string> args;
     std::istringstream is(format);
@@ -56,7 +53,8 @@ std::vector<std::string> ScriptParser::ParseArgs(const std::string &format) {
     return std::move(args);
 }
 
-std::vector<std::string> ScriptParser::ParseRequire(const std::string &format) {
+std::vector<std::string> ScriptParser::ParseRequire(const std::string &format)
+{
 
     std::vector<std::string> requires;
 

@@ -1,7 +1,7 @@
 #include <sstream>
 #include <algorithm>
 #include <iomanip>
-#include "LogConverter.h"
+#include "../include/LogConverter.h"
 
 void LogConverter::Convert(const std::string& fromFile, const std::string& toFile, const std::string& filterFile)
 {
@@ -13,34 +13,34 @@ void LogConverter::Convert(const std::string& fromFile, const std::string& toFil
     auto filters = std::move(ScriptParser().Parse(scr_stream));
     auto parsed = std::move(ParseLog(logs, filters));
 
-    for (auto frame : filters)
+    for (auto filter : filters)
     {
-        ga_stream << frame.Name() << ':' << std::endl;
+        ga_stream << filter.Name() << ':' << std::endl;
 
-        auto it = std::find_if(parsed.begin(), parsed.end(), [&frame](const std::pair<std::string, std::vector<std::string>>& elem) {
-            return frame.Name() == elem.first;
+        auto it = std::find_if(parsed.begin(), parsed.end(), [&filter](const std::pair<std::string, std::vector<std::string>>& elem) {
+            return filter.Name() == elem.first;
         });
 
-        for (int i = 0; i < it->second.size(); i++)
+        for (auto& i : it->second)
         {
-            ga_stream << '\t' << "frame:\n";
-            std::istringstream sin(it->second[i]);
+            ga_stream << '\t' << "filter:\n";
+            std::istringstream sin(i);
 
-            for (int j = 0; j < frame.GetCountArgs(); j++)
+            for (int j = 0; j < filter.GetCountArgs(); j++)
             {
-                if (frame.GetArg(j) == "%t")
+                if (filter.GetArg(j) == "%t")
                 {
                     double time;
                     sin >> time;
                     ga_stream << std::setprecision(11) <<"\t\t" << "time: " << time << std::endl;
                 }
-                else if (frame.GetArg(j) == "%d")
+                else if (filter.GetArg(j) == "%d")
                 {
                     int d_value;
                     sin >> d_value;
                     ga_stream << "\t\t" << "value: " << d_value << std::endl;
                 }
-                else if (frame.GetArg(j) == "%c")
+                else if (filter.GetArg(j) == "%c")
                 {
                     char c_value;
                     sin >> c_value;
@@ -56,8 +56,8 @@ void LogConverter::Convert(const std::string& fromFile, const std::string& toFil
     }
 }
 
-std::vector<std::string> LogConverter::ReadFile(std::ifstream &file) {
-
+std::vector<std::string> LogConverter::ReadFile(std::ifstream &file)
+{
     std::vector<std::string> inputLines;
 
     while (!file.eof())
@@ -70,8 +70,9 @@ std::vector<std::string> LogConverter::ReadFile(std::ifstream &file) {
     return std::move(inputLines);
 }
 
-std::vector<std::pair<std::string, std::vector<std::string>>> LogConverter::ParseLog(const std::vector<std::string> &inputVec, const std::vector<Frame>& filters) {
-
+std::vector<std::pair<std::string, std::vector<std::string>>> LogConverter::ParseLog(const std::vector<std::string> &inputVec,
+                                                                                     const std::vector<FiltersConteiner>& filters)
+{
     std::vector<std::pair<std::string, std::vector<std::string>>> filtred;
 
     for (auto frame : filters)
