@@ -1,3 +1,0 @@
-thread switch=%t " | sys | thread switch hndl " %s " addr " %s " pri " %d
-time_1=%t " | sctl | time_1"
-write=%t " | pextgt | write " %c
