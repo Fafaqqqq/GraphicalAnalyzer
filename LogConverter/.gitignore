@@ -1,4 +1,5 @@
-debug*
+debug*.*
+debug
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
