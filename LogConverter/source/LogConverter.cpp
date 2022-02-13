@@ -3,71 +3,88 @@
 #include <iomanip>
 #include "../include/LogConverter.h"
 
-void LogConverter::Convert(const std::string& fromFile, const std::string& toFile, const std::string& filterFile)
+void LogConverter::Convert(const std::string& fromFile,
+                           const std::string& toFile,
+                           const std::string& filterFile,
+                           int count_of_lines)
 {
+
+    CheckFileType(fromFile, "log");
+    CheckFileType(toFile, "ga");
+    CheckFileType(filterFile, "flt");
+
     std::ifstream log_stream(fromFile);
-    std::ifstream scr_stream(filterFile);
+    std::ifstream flt_stream(filterFile);
     std::ofstream ga_stream(toFile, std::ios::binary);
 
-    auto logs = std::move(ReadFile(log_stream));
-    auto filters = std::move(ScriptParser().Parse(scr_stream));
-    auto parsed = std::move(ParseLog(logs, filters));
+    auto filters = std::move(ScriptParser().Parse(flt_stream));
 
-    for (auto filter : filters)
+
+    while (!log_stream.eof())
     {
-        ga_stream << filter.Name() << ':' << std::endl;
+        auto logs = std::move(ReadLines(log_stream, 10));
+        auto parsed = std::move(ParseLog(logs, filters));
 
-        auto it = std::find_if(parsed.begin(), parsed.end(), [&filter](const std::pair<std::string, std::vector<std::string>>& elem) {
-            return filter.Name() == elem.first;
-        });
-
-        for (auto& i : it->second)
+        for (auto filter: filters)
         {
-            ga_stream << '\t' << "filter:\n";
-            std::istringstream sin(i);
+            auto it = std::find_if(parsed.begin(), parsed.end(),
+                                   [&filter](const std::pair<std::string, std::vector<std::string>> &elem) {
+                                       return filter.Name() == elem.first;
+                                   });
 
-            for (int j = 0; j < filter.GetCountArgs(); j++)
+            if (!it->second.empty())
             {
-                if (filter.GetArg(j) == "%t")
+                ga_stream << filter.Name() << ':' << std::endl;
+
+                for (auto &i: it->second)
                 {
-                    double time;
-                    sin >> time;
-                    ga_stream << std::setprecision(11) <<"\t\t" << "time: " << time << std::endl;
-                }
-                else if (filter.GetArg(j) == "%d")
-                {
-                    int d_value;
-                    sin >> d_value;
-                    ga_stream << "\t\t" << "value: " << d_value << std::endl;
-                }
-                else if (filter.GetArg(j) == "%c")
-                {
-                    char c_value;
-                    sin >> c_value;
-                    ga_stream << "\t\t" << "value: " << c_value << std::endl;
-                }
-                else
-                {
-                    std::string s_value;
-                    sin >> s_value;
+                    std::istringstream sin(i);
+
+                    for (int j = 0; j < filter.GetCountArgs(); j++)
+                    {
+                        if (filter.GetArg(j) == "%t")
+                        {
+                            double time;
+                            sin >> time;
+                            ga_stream << std::setprecision(11) << "\t" << "time: " << time << std::endl;
+                        }
+                        else if (filter.GetArg(j) == "%d")
+                        {
+                            int d_value;
+                            sin >> d_value;
+                            ga_stream << "\t\t" << "value: " << d_value << std::endl;
+                        }
+                        else if (filter.GetArg(j) == "%c")
+                        {
+                            std::string c_value;
+                            sin >> c_value;
+                            ga_stream << "\t\t" << "value: " << c_value << std::endl;
+                        }
+                        else
+                        {
+                            std::string s_value;
+                            sin >> s_value;
+                        }
+                    }
                 }
             }
+
         }
     }
 }
 
-std::vector<std::string> LogConverter::ReadFile(std::ifstream &file)
+std::vector<std::string> LogConverter::ReadLines(std::ifstream &file, int countOfLine)
 {
     std::vector<std::string> inputLines;
 
-    while (!file.eof())
+    while (!file.eof() && countOfLine--)
     {
         std::string line;
         std::getline(file, line);
 
         inputLines.emplace_back(line);
     }
-    return std::move(inputLines);
+    return inputLines;
 }
 
 std::vector<std::pair<std::string, std::vector<std::string>>> LogConverter::ParseLog(const std::vector<std::string> &inputVec,
@@ -105,5 +122,16 @@ std::vector<std::pair<std::string, std::vector<std::string>>> LogConverter::Pars
         filtred.emplace_back(frame.Name(), std::move(matched));
     }
 
-    return std::move(filtred);
+    return filtred;
+}
+
+void LogConverter::CheckFileType(const std::string &fileName, const std::string &expectedType)
+{
+    auto index = fileName.find(expectedType);
+
+    auto expectedIndex = fileName.size() - expectedType.size();
+    if (index != expectedIndex)
+    {
+        throw std::logic_error("Invalid file format (Expected: ." + expectedType + ")!");
+    }
 }

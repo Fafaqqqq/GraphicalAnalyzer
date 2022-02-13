@@ -7,10 +7,16 @@
 class LogConverter
 {
 public:
-    void Convert(const std::string& fromFile, const std::string& toFile, const std::string& filterFile);
+    void Convert(const std::string& fromFile,
+                 const std::string& toFile,
+                 const std::string& filterFile,
+                 int count_of_lines);
 
-    std::vector<std::string> ReadFile(std::ifstream& file);
-    std::vector<std::pair<std::string, std::vector<std::string>>> ParseLog(const std::vector<std::string>& inputVec, const std::vector<FiltersConteiner>& filters);
+private:
+    std::vector<std::string> ReadLines(std::ifstream& file, int countOfLine);
+    std::vector<std::pair<std::string, std::vector<std::string>>> ParseLog(const std::vector<std::string>& inputVec,
+                                                                           const std::vector<FiltersConteiner>& filters);
+    void CheckFileType(const std::string& fileName, const std::string& expectedType);
 };
 
 
